@@ -1,8 +1,17 @@
 angular.module( 'ngBoilerplate.store', [
-    'ui.router'
+    'ui.router',
+    'restangular',
+    'base64'
 ])
 
-.config(function config( $stateProvider ) {
+.config(function config( $stateProvider, $base64, RestangularProvider) {
+
+    RestangularProvider.setBaseUrl('http://api.cashcreators.honeycombits.com');
+
+    RestangularProvider.setDefaultHeaders({
+        'Authorization': 'Basic ' + $base64.encode('usr:psr')
+    });
+
     $stateProvider.state( 'storenew', {
         url: '/store/new',
         views: {
@@ -15,10 +24,18 @@ angular.module( 'ngBoilerplate.store', [
     });
 })
 
-.controller( 'StoreCtrl', function StoreController( $scope ) {
+.controller( 'StoreCtrl', function ( $scope, Restangular ) {
 
     $scope.save = function(store) {
-        console.log(store);
+
+        var stores = Restangular.all('stores/create');
+
+        stores.post({
+            data: store
+        }).then(function (response) {
+            $scope.response = response;
+        });
+
     };
 
 })
