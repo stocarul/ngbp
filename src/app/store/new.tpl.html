@@ -1,0 +1,16 @@
+<div ng-controller="StoreCtrl">
+<form novalidate class="simple-form">
+    <div>
+        <label for="store-name">Name:</label>
+        <input type="text" id="store-name" ng-model="store.name" />
+    </div>
+
+    <div>
+        <label for="store-keyword">Keyword:</label>
+        <input type="text" id="store-keyword" ng-model="store.keyword" />
+    </div>
+
+    <input type="submit" ng-click="save(store)" value="Save" />
+</form>
+<pre>form = {{store | json}}</pre>
+</div>
